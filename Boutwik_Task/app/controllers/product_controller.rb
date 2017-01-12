@@ -2,7 +2,6 @@ class ProductController < ApplicationController
 
   def show
   end
-
   def search
     @token="020a5436c867942ff7dad6b8426ad5e9"
     @Link_encoded= url_encode(params[:link])
