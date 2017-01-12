@@ -1,0 +1,74 @@
+<html>
+<head>
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">My Product Scraper</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Search</a></li>
+        <li><a href="/product/saved">History</a></li>
+      </ul>
+    </div>
+  </nav>
+  <% if flash[:notice] %>
+  <%= flash[:notice] %></div>
+  <% end %>
+  <div>
+    <%= form_tag(:action => "search") do %>
+    <span class="label label-default">Copy your link here:</span>
+    <%= text_field_tag("link","",  class: 'form-control mr-sm-2')%>
+    <%= submit_tag("Search", :id=>"button", :class=>"btn btn-primary", :name=>"search") %>
+    <% end %>
+  </div>
+
+  <% if (params["link"]) %>
+  <% if !(@json["error"])%>
+
+  <table border="1">
+    <tr>
+      <th>FIELD</th>
+      <th>description</th>
+    </tr>
+    <tr>
+      <td>Type</td>
+      <td>
+        <%=@json["objects"][0]["type"]%>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        PageUrl
+      </td>
+      <td>
+        <%=@json["objects"][0]["pageUrl"]%>
+      </td>
+    </tr>
+    <tr>
+      <td>title</td>
+      <td><%=@json["objects"][0]["title"]%>
+      </td>
+      <tr>
+        <td>Description</td>
+        <td><%=@json["objects"][0]["text"]%></td>
+      </tr>
+      <tr>
+        <td>Price</td>
+        <td><%=@json["objects"][0]["offerPrice"]%></td>
+      </tr>
+      <tr>
+        <td>Image</td>
+        <td> <% if( @json["objects"][0]["images"]) %>
+          <%= image_tag(@json["objects"][0]["images"][0]["url"],height:"200", width:"200")%></div>
+          <%end%>
+        </td>
+      </tr>
+    </table>
+      <% end %>
+    <% end %>
+
+
+  </body>
+  </html>
